@@ -18,56 +18,64 @@ namespace LazyRedpaw.StaticHashes
                 string[] scriptLines = File.ReadAllLines(StaticHashesStorageFilePath);
                 List<int> hashList =  new List<int>(scriptLines.Length);
                 List<GUIContent> labelsList = new List<GUIContent>(scriptLines.Length);
-                if (hashList.Count > 0)
+                for (int i = InsertCategoryIndex; i < scriptLines.Length; i++)
                 {
-                    for (int i = InsertCategoryIndex; i < scriptLines.Length; i++)
+                    if ((scriptLines[i].Contains("int") || scriptLines[i].Contains("class")) && !scriptLines[i].Contains(CategoriesName))
                     {
-                        if ((scriptLines[i].Contains("int") || scriptLines[i].Contains("class")) && !scriptLines[i].Contains(CategoriesName))
-                        {
-                            string[] splitLines = scriptLines[i].Split(' ');
-                            hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
-                            labelsList.Add(new GUIContent(splitLines[4]));
-                        }
+                        string[] splitLines = scriptLines[i].Split(' ');
+                        hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
+                        labelsList.Add(new GUIContent(splitLines[4]));
                     }
                 }
                 hashes = hashList.ToArray();
                 labels = labelsList.ToArray();
             }
-            hashes = new[] { 0 };
-            labels = new[] { new GUIContent("No existing static hashes") };
+            else
+            {
+                hashes = NoExistingHashesArray;
+                labels = NoExistingHashesLabelArray;
+            }
         }
         
         public static void GetAllHashesFromCategory(int categoryHash, out int[] hashes, out GUIContent[] labels)
         {
-            var scriptLines = File.ReadAllLines(StaticHashesStorageFilePath);
-            List<int> hashList =  new List<int>(scriptLines.Length);
-            List<GUIContent> labelsList = new List<GUIContent>(scriptLines.Length);
-            bool isCategoryFound = false;
-            for (int i = InsertCategoryIndex; i < scriptLines.Length; i++)
+            if (File.Exists(StaticHashesStorageFilePath))
             {
-                if (scriptLines[i].Contains('{') || scriptLines[i].Contains('}'))
+                var scriptLines = File.ReadAllLines(StaticHashesStorageFilePath);
+                List<int> hashList =  new List<int>(scriptLines.Length);
+                List<GUIContent> labelsList = new List<GUIContent>(scriptLines.Length);
+                bool isCategoryFound = false;
+                for (int i = InsertCategoryIndex; i < scriptLines.Length; i++)
                 {
-                    if(isCategoryFound) break;
-                    else continue;
-                }
-                if (scriptLines[i].Contains("class"))
-                {
-                    int otherHash = int.Parse(scriptLines[i].Split(' ')[^1].Replace(";", string.Empty));
-                    if (categoryHash == otherHash)
+                    if (scriptLines[i].Contains('{') || scriptLines[i].Contains('}'))
                     {
-                        isCategoryFound = true;
-                        i += 2;
+                        if(isCategoryFound) break;
+                        else continue;
+                    }
+                    if (scriptLines[i].Contains("class"))
+                    {
+                        int otherHash = int.Parse(scriptLines[i].Split(' ')[^1].Replace(";", string.Empty));
+                        if (categoryHash == otherHash)
+                        {
+                            isCategoryFound = true;
+                            i += 2;
+                        }
+                    }
+                    if (isCategoryFound)
+                    {
+                        string[] splitLines = scriptLines[i].Split(' ');
+                        hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
+                        labelsList.Add(new GUIContent(splitLines[^3]));
                     }
                 }
-                if (isCategoryFound)
-                {
-                    string[] splitLines = scriptLines[i].Split(' ');
-                    hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
-                    labelsList.Add(new GUIContent(splitLines[^3]));
-                }
+                hashes = hashList.ToArray();
+                labels = labelsList.ToArray();
             }
-            hashes = hashList.ToArray();
-            labels = labelsList.ToArray();
+            else
+            {
+                hashes = NoExistingHashesArray;
+                labels = NoExistingHashesLabelArray;
+            }
         }
         
         public static void GetAllHashesFromCategory(Type categoryType, out int[] hashes, out GUIContent[] labels)

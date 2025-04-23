@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace LazyRedpaw.StaticHashes
 {
@@ -7,6 +8,9 @@ namespace LazyRedpaw.StaticHashes
     {
         public static readonly Regex NameRegex = new(@"^[A-Za-z][A-Za-z0-9]*$");
         public static readonly Regex StaticCallRegex = new(@"\b\w+\.\w+\b");
+        public static readonly GUIContent NoExistingHashesLabel = new GUIContent("No existing static hashes");
+        public static readonly int[] NoExistingHashesArray = new int[1];
+        public static readonly GUIContent[] NoExistingHashesLabelArray = new GUIContent[1] { NoExistingHashesLabel };
         
         public const string StaticHashesWindowTitle = "Static Hashes";
         public const string NewCategoryNameField = "NewCategoryNameField";
@@ -66,7 +70,7 @@ namespace LazyRedpaw.StaticHashes
             "{",
             "}"
         };
-        public const string StaticHashesStorageFilePath = "Assets/Script/LazyRedpaw/StaticHashes/StaticHashesStorage.cs";
+        public const string StaticHashesStorageFilePath = "Assets/Scripts/LazyRedpaw/StaticHashes/StaticHashesStorage.cs";
         public const string NamePlaceholder = "NAME_PLACEHOLDER";
     }
 }

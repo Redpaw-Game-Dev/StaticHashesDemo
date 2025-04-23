@@ -114,6 +114,7 @@ namespace LazyRedpaw.StaticHashes
         
         public List<string> GetCategoryAsScriptLines()
         {
+            SortHashes();
             List<string> lines = new List<string>(_hashes.Count + 3);
             lines.Add($"\tpublic abstract partial class {_changeCategoryNameField.value} : StaticHashesCategory // {_id}");
             lines.Add("\t{");
