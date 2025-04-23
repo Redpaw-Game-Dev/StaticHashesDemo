@@ -13,20 +13,28 @@ namespace LazyRedpaw.StaticHashes
     {
         public static void GetAllStaticHashes(out int[] hashes, out GUIContent[] labels)
         {
-            var scriptLines = File.ReadAllLines(StaticHashesStorageFilePath);
-            List<int> hashList =  new List<int>(scriptLines.Length);
-            List<GUIContent> labelsList = new List<GUIContent>(scriptLines.Length);
-            for (int i = InsertCategoryIndex; i < scriptLines.Length; i++)
+            if (File.Exists(StaticHashesStorageFilePath))
             {
-                if ((scriptLines[i].Contains("int") || scriptLines[i].Contains("class")) && !scriptLines[i].Contains(CategoriesName))
+                string[] scriptLines = File.ReadAllLines(StaticHashesStorageFilePath);
+                List<int> hashList =  new List<int>(scriptLines.Length);
+                List<GUIContent> labelsList = new List<GUIContent>(scriptLines.Length);
+                if (hashList.Count > 0)
                 {
-                    string[] splitLines = scriptLines[i].Split(' ');
-                    hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
-                    labelsList.Add(new GUIContent(splitLines[4]));
+                    for (int i = InsertCategoryIndex; i < scriptLines.Length; i++)
+                    {
+                        if ((scriptLines[i].Contains("int") || scriptLines[i].Contains("class")) && !scriptLines[i].Contains(CategoriesName))
+                        {
+                            string[] splitLines = scriptLines[i].Split(' ');
+                            hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
+                            labelsList.Add(new GUIContent(splitLines[4]));
+                        }
+                    }
                 }
+                hashes = hashList.ToArray();
+                labels = labelsList.ToArray();
             }
-            hashes = hashList.ToArray();
-            labels = labelsList.ToArray();
+            hashes = new[] { 0 };
+            labels = new[] { new GUIContent("No existing static hashes") };
         }
         
         public static void GetAllHashesFromCategory(int categoryHash, out int[] hashes, out GUIContent[] labels)
