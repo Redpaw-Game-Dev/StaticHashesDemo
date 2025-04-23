@@ -1,0 +1,11 @@
+{
+  "name": "com.lazyredpaw.statichashesdemo",
+  "displayName": "Static Hashes Demo",
+  "version": "0.0.1",
+  "unity": "6000.0",
+  "type": "plugin",
+  "author": {
+    "name": "Lazy Redpaw"
+  },
+  "description": "Plugin for easy id management"
+}

@@ -1,0 +1,12 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:Template name="NameExistingErrorTextUXML" src="project://database/Packages/com.lazyredpaw.statichashesdemo/Editor/NameExistingErrorTextUXML.uxml?fileID=9197481963319205126&amp;guid=3cd1f52bed74b6c42bb0f9c5d16a7feb&amp;type=3#NameExistingErrorTextUXML" />
+    <Style src="project://database/Packages/com.lazyredpaw.statichashesdemo/Editor/Styles.uss?fileID=7433441132597879392&amp;guid=f47eda03c15bc814586ded2ea35fd403&amp;type=3#Styles" />
+    <engine:VisualElement name="HashListItem">
+        <engine:VisualElement class="horizontal-group" style="flex-grow: 1;">
+            <engine:TextField placeholder-text="Hash name" name="HashNameField" style="flex-grow: 1;" />
+            <engine:Button text="Revert" name="RevertButton" class="width-15p" />
+            <engine:Button text="X" name="DeleteButton" class="error-text-color" />
+        </engine:VisualElement>
+        <engine:Instance template="NameExistingErrorTextUXML" />
+    </engine:VisualElement>
+</engine:UXML>

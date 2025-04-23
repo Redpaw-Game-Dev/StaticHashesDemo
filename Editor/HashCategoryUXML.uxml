@@ -1,0 +1,33 @@
+<engine:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:engine="UnityEngine.UIElements" xmlns:editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <engine:Template name="NameExistingErrorTextUXML" src="project://database/Packages/com.lazyredpaw.statichashesdemo/Editor/NameExistingErrorTextUXML.uxml?fileID=9197481963319205126&amp;guid=3cd1f52bed74b6c42bb0f9c5d16a7feb&amp;type=3#NameExistingErrorTextUXML" />
+    <Style src="project://database/Packages/com.lazyredpaw.statichashesdemo/Editor/Styles.uss?fileID=7433441132597879392&amp;guid=f47eda03c15bc814586ded2ea35fd403&amp;type=3#Styles" />
+    <engine:VisualElement name="CategoryRoot" class="box-1-border" style="width: 99%; left: 3px;">
+        <engine:VisualElement name="Header" style="flex-grow: 1;">
+            <engine:VisualElement style="flex-grow: 1; flex-direction: row;">
+                <engine:VisualElement template="HashListItemUXML">
+                    <Style src="project://database/Assets/Script/LazyRedpaw/StaticHashes/Editor/Styles.uss?fileID=7433441132597879392&amp;guid=f47eda03c15bc814586ded2ea35fd403&amp;type=3#Styles" />
+                </engine:VisualElement>
+                <engine:Button name="ExpandCategoryButton" class="foldout-arrow" />
+                <engine:TextField placeholder-text="Change Category Name" name="ChangeCategoryNameField" style="flex-grow: 1;" />
+                <engine:Button text="Revert" name="RevertButton" style="width: 60px;" />
+                <engine:Button text="X" name="DeleteButton" class="error-text-color" />
+            </engine:VisualElement>
+            <engine:Instance template="NameExistingErrorTextUXML" name="CategoryNameExistingErrorTextUXML" style="margin-left: 16px;" />
+        </engine:VisualElement>
+        <engine:VisualElement name="CategoryContent" style="flex-grow: 1; margin-left: 16px;">
+            <engine:VisualElement class="horizontal-group" style="flex-grow: 1;">
+                <engine:TextField placeholder-text="New Hash Name" name="NewHashNameField" style="flex-grow: 1;" />
+                <engine:Button text="Create Hash" name="CreateHashButton" style="width: 88px;" />
+            </engine:VisualElement>
+            <engine:Instance template="NameExistingErrorTextUXML" name="NewHashNameExistingErrorTextUXML" />
+            <engine:VisualElement name="HashListRoot" style="width: 99%; border-top-width: 1px; border-right-width: 1px; border-bottom-width: 1px; border-left-width: 1px; border-top-left-radius: 3px; border-top-right-radius: 3px; border-bottom-right-radius: 3px; border-bottom-left-radius: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); background-color: rgb(62, 62, 62); padding-top: 5px; padding-right: 5px; padding-bottom: 5px; padding-left: 5px; left: 3px;">
+                <engine:VisualElement name="HashListHeader" class="horizontal-group" style="flex-grow: 1;">
+                    <engine:Button name="ExpandHashesButton" class="foldout-arrow" />
+                    <engine:Label text="Hash List" name="HashListTitle" style="flex-grow: 1;" />
+                    <engine:Label text="0 items" name="HashListItemsCount" />
+                </engine:VisualElement>
+                <engine:ScrollView name="HashList" horizontal-scroller-visibility="Hidden" style="overflow: hidden; max-height: 125px; margin-left: 14px;" />
+            </engine:VisualElement>
+        </engine:VisualElement>
+    </engine:VisualElement>
+</engine:UXML>

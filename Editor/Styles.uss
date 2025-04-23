@@ -1,0 +1,126 @@
+.horizontal-group {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.width-30p {
+    width: 30%;
+}
+
+.foldout-header {
+    -unity-font-style: bold;
+}
+
+.header {
+    -unity-text-align: upper-center;
+    -unity-font-style: bold;
+}
+
+.error-text-color {
+    color: rgb(255, 0, 0);
+}
+
+.horizontal-group {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.text-color-1 {
+    color: rgb(185, 185, 185);
+}
+
+.error-text-color {
+    color: rgb(255, 0, 0);
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+.error-border {
+    border-left-color: rgb(255, 0, 0);
+    border-right-color: rgb(255, 0, 0);
+    border-top-color: rgb(255, 0, 0);
+    border-bottom-color: rgb(255, 0, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.width-15p {
+    width: 15%;
+}
+
+.changed-border {
+    border-left-color: rgb(255, 238, 0);
+    border-right-color: rgb(255, 238, 0);
+    border-top-color: rgb(255, 238, 0);
+    border-bottom-color: rgb(255, 238, 0);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+.horizontal-group {
+    flex-direction: row;
+    flex-grow: 1;
+}
+
+.expand-button-expanded {
+    transition-property: rotate;
+    rotate: 90deg;
+}
+
+.foldout-arrow {
+    width: 14px;
+    height: 14px;
+    background-color: rgba(88, 88, 88, 0);
+    background-image: url("project://database/Packages/com.lazyredpaw.statichashesdemo/Sprites/Arrow.png?fileID=2800000&guid=a6a045933fd000b4c9ee2355f90f6f24&type=3#Arrow");
+    border-left-color: rgba(92, 92, 92, 0);
+    border-right-color: rgba(92, 92, 92, 0);
+    border-top-color: rgba(92, 92, 92, 0);
+    border-bottom-color: rgba(92, 92, 92, 0);
+    margin-left: 2px;
+    -unity-background-image-tint-color: rgb(209, 208, 208);
+    scale: 0.76 0.76;
+    margin-right: 0;
+    padding-right: 0;
+}
+
+.box-1-border {
+    background-color: rgb(51, 51, 51);
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    border-left-color: rgb(0, 0, 0);
+    border-right-color: rgb(0, 0, 0);
+    border-top-color: rgb(0, 0, 0);
+    border-bottom-color: rgb(0, 0, 0);
+    padding-top: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    padding-left: 5px;
+}
+
+.width-22p {
+    width: 22%;
+}
+
+.width-140px {
+    width: 140px;
+}

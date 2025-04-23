@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0bf4c27d763b4b8fa18661f52c2bb926
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - _treeAsset: {fileID: 9197481963319205126, guid: 8b92d4efd6210b24fbbfb813f441ab5a, type: 3}
+  - _hashCategoryAsset: {fileID: 9197481963319205126, guid: f81a204a61942b9488e054cba927f600, type: 3}
+  - _hashItemListAsset: {fileID: 9197481963319205126, guid: 8aa565193a813aa4693714681cbf5a89, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
