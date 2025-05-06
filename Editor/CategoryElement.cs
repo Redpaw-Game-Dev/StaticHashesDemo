@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEngine.UIElements;
 using static LazyRedpaw.StaticHashes.Constants;
@@ -111,6 +112,54 @@ namespace LazyRedpaw.StaticHashes
         }
 
         public string GetCategoryAsHashScriptLine() => $"\t\tpublic static readonly int {_changeCategoryNameField.value} = {_id};";
+
+        public string GetHashesArrayAsString()
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < _hashes.Count; i++)
+            {
+                if(i > 0) strBuilder.Append(',');
+                strBuilder.Append($" {_hashes[i].Value}");
+            }
+            return strBuilder.ToString();
+        }
+        
+        public string GetCategoryHashesAsScriptLine()
+        {
+            StringBuilder strBuilder = new StringBuilder($"\t\tpublic static readonly int[] {CategoryName}{HashesArray} = ");
+            strBuilder.Append('{');
+            for (int i = 0; i < _hashes.Count; i++)
+            {
+                if(i > 0) strBuilder.Append(',');
+                strBuilder.Append($" {_hashes[i].Value}");
+            }
+            strBuilder.Append(" };");
+            return strBuilder.ToString();
+        }
+        
+        public string GetHashNamesArrayAsString()
+        {
+            StringBuilder strBuilder = new StringBuilder();
+            for (int i = 0; i < _hashes.Count; i++)
+            {
+                if(i > 0) strBuilder.Append(',');
+                strBuilder.Append($" \"{_hashes[i].HashName}\"");
+            }
+            return strBuilder.ToString();
+        }
+        
+        public string GetCategoryHashNamesAsScriptLine()
+        {
+            StringBuilder strBuilder = new StringBuilder($"\t\tpublic static readonly string[] {CategoryName}{HashNamesArray} = ");
+            strBuilder.Append('{');
+            for (int i = 0; i < _hashes.Count; i++)
+            {
+                if(i > 0) strBuilder.Append(',');
+                strBuilder.Append($" \"{_hashes[i].HashName}\"");
+            }
+            strBuilder.Append(" };");
+            return strBuilder.ToString();
+        }
         
         public List<string> GetCategoryAsScriptLines()
         {

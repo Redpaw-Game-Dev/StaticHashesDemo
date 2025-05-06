@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -122,48 +123,172 @@ namespace LazyRedpaw.StaticHashes
         private void UpdateStaticCalls()
         {
             string path = Application.dataPath;
-            string[] files = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
-            
-
-            for (int i = 0; i < files.Length; i++)
+            // string[] files = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
+            string[] csFiles = Directory.GetFiles(path, "*.cs", SearchOption.AllDirectories);
+            string[] jsonFiles = Directory.GetFiles(path, "*.json", SearchOption.AllDirectories);
+            string[] allFiles = csFiles.Concat(jsonFiles).ToArray();
+            for (int i = 0; i < allFiles.Length; i++)
             {
-                string fileContent = File.ReadAllText(files[i]);
+                string fileContent = File.ReadAllText(allFiles[i]);
                 for (int j = 0; j < _categories.Count; j++)
                 {
                     CategoryElement category = _categories[j];
                     Regex regex = new Regex(@$"(?<![a-zA-Z0-9]){category.SavedCategoryName}(?![a-zA-Z0-9])");
                     fileContent = regex.Replace(fileContent, category.CategoryName);
+                    regex = new Regex(@$"(?<![\d-]){category.SavedID}(?![\d-])");
+                    fileContent = regex.Replace(fileContent, category.ID.ToString());
                     for (int k = 0; k < category.Hashes.Count; k++)
                     {
                         HashElement hash = category.Hashes[k];
                         regex = new Regex(@$"(?<![a-zA-Z0-9]){hash.SavedHashName}(?![a-zA-Z0-9])");
                         fileContent = regex.Replace(fileContent, hash.HashName);
+                        regex = new Regex(@$"(?<![\d-]){hash.SavedValue}(?![\d-])");
+                        fileContent = regex.Replace(fileContent, hash.Value.ToString());
                     }
                 }
-                File.WriteAllText(files[i], fileContent);
+                File.WriteAllText(allFiles[i], fileContent);
             }
         }
 
         private void UpdateScriptFiles()
         {
-            List<string> storageScriptLines = new List<string>()
+            List<string> scriptLines = new List<string>()
+            {
+                "//This file was generated automatically. Do not change it manually!",
+                "namespace LazyRedpaw.StaticHashes",
+                "{"
+            };
+            for (int i = 0; i < _categories.Count; i++)
+            {
+                scriptLines.AddRange(_categories[i].GetCategoryAsScriptLines());
+            }
+            scriptLines.Add("}");
+            CheckFileExistence(StaticHashesStorageFilePath);
+            File.WriteAllLines(StaticHashesStorageFilePath, scriptLines);
+            
+            scriptLines.Clear();
+            scriptLines.AddRange(new []
             {
                 "//This file was generated automatically. Do not change it manually!",
                 "namespace LazyRedpaw.StaticHashes",
                 "{",
-            };
-            for (int i = 0; i < _categories.Count; i++)
+                "\tpublic static class StaticHashesHelper",
+                "\t{"
+            });
+            StringBuilder strBuilder = new StringBuilder("\t\tpublic static readonly int[] CategoryIdsArray = {");
+            for (int i = 1; i < _categories.Count; i++)
             {
-                storageScriptLines.AddRange(_categories[i].GetCategoryAsScriptLines());
+                if (i > 1) strBuilder.Append(',');
+                strBuilder.Append($" {_categories[i].ID}"); 
             }
-            storageScriptLines.Add("}");
-            if (!File.Exists(StaticHashesStorageFilePath))
+            strBuilder.Append(" };\n");
+            strBuilder.Append("\t\tpublic static readonly string[] CategoriesNamesArray = {");
+            for (int i = 1; i < _categories.Count; i++)
             {
-                string directory = Path.GetDirectoryName(StaticHashesStorageFilePath);
+                if (i > 1) strBuilder.Append(',');
+                strBuilder.Append($" \"{_categories[i].CategoryName}\""); 
+            }
+            strBuilder.Append(" };\n");
+            strBuilder.Append($"\t\tpublic static readonly int[] {AllHashesArray} = ");
+            strBuilder.Append('{');
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                if (i > 1) strBuilder.Append(',');
+                strBuilder.Append(_categories[i].GetHashesArrayAsString()); 
+            }
+            strBuilder.Append(" };\n");
+            strBuilder.Append($"\t\tpublic static readonly string[] {AllHashNamesArray} = ");
+            strBuilder.Append('{');
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                if (i > 1) strBuilder.Append(',');
+                strBuilder.Append(_categories[i].GetHashNamesArrayAsString()); 
+            }
+            strBuilder.Append(" };\n");
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                strBuilder.AppendLine(_categories[i].GetCategoryHashesAsScriptLine());
+                strBuilder.AppendLine(_categories[i].GetCategoryHashNamesAsScriptLine());
+            }
+            strBuilder.AppendLine("\t\tpublic static int[] GetHashes(int categoryId)\n" +
+                                  "\t\t{\n" +
+                                  "\t\t\tswitch (categoryId)\n" +
+                                  "\t\t\t{");
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                CategoryElement cat = _categories[i];
+                strBuilder.AppendLine($"\t\t\t\t case {cat.ID}: return {cat.CategoryName}{HashesArray};");
+            }
+            strBuilder.AppendLine("\t\t\t}\n" +
+                                  "\t\t\treturn null;\n" +
+                                  "\t\t}");
+            strBuilder.AppendLine("\t\tpublic static int[] GetHashes(string categoryName)\n" +
+                                  "\t\t{\n" +
+                                  "\t\t\tswitch (categoryName)\n" +
+                                  "\t\t\t{");
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                CategoryElement cat = _categories[i];
+                strBuilder.AppendLine($"\t\t\t\t case \"{cat.CategoryName}\": return {cat.CategoryName}{HashesArray};");
+            }
+            strBuilder.AppendLine("\t\t\t}\n" +
+                                  "\t\t\treturn null;\n" +
+                                  "\t\t}");
+            strBuilder.AppendLine("\t\tpublic static string[] GetHashNames(int categoryId)\n" +
+                                  "\t\t{\n" +
+                                  "\t\t\tswitch (categoryId)\n" +
+                                  "\t\t\t{");
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                CategoryElement cat = _categories[i];
+                strBuilder.AppendLine($"\t\t\t\t case {cat.ID}: return {cat.CategoryName}{HashNamesArray};");
+            }
+            strBuilder.AppendLine("\t\t\t}\n" +
+                                  "\t\t\treturn null;\n" +
+                                  "\t\t}");
+            strBuilder.AppendLine("\t\tpublic static string[] GetHashNames(string categoryName)\n" +
+                                  "\t\t{\n" +
+                                  "\t\t\tswitch (categoryName)\n" +
+                                  "\t\t\t{");
+            for (int i = 1; i < _categories.Count; i++)
+            {
+                CategoryElement cat = _categories[i];
+                strBuilder.AppendLine($"\t\t\t\t case \"{cat.CategoryName}\": return {cat.CategoryName}{HashNamesArray};");
+            }
+            strBuilder.AppendLine("\t\t\t}\n" +
+                                  "\t\t\treturn null;\n" +
+                                  "\t\t}");
+            strBuilder.AppendLine("\t\tpublic static string GetHashName(int hash)\n" +
+                                  "\t\t{\n" +
+                                  $"\t\t\tfor (int i = 0; i < {AllHashesArray}.Length; i++)\n" +
+                                  "\t\t\t{\n" +
+                                  $"\t\t\t\tif (hash == {AllHashesArray}[i]) return {AllHashNamesArray}[i];\n" +
+                                  "\t\t\t}\n" +
+                                  "\t\t\treturn null;\n" +
+                                  "\t\t}");
+            strBuilder.AppendLine("\t\tpublic static string GetCategoryName(int categoryId)\n" +
+                                  "\t\t{\n" +
+                                  $"\t\t\tfor (int i = 0; i < CategoryIdsArray.Length; i++)\n" +
+                                  "\t\t\t{\n" +
+                                  $"\t\t\t\tif (categoryId == CategoryIdsArray[i]) return CategoriesNamesArray[i];\n" +
+                                  "\t\t\t}\n" +
+                                  "\t\t\treturn null;\n" +
+                                  "\t\t}\n" +
+                                  "\t}\n" +
+                                  "}");
+            scriptLines.Add(strBuilder.ToString());
+            CheckFileExistence(StaticHashesHelperFilePath);
+            File.WriteAllLines(StaticHashesHelperFilePath, scriptLines);
+        }
+
+        private void CheckFileExistence(string filePath)
+        {
+            if (!File.Exists(filePath))
+            {
+                string directory = Path.GetDirectoryName(filePath);
                 if(!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-                File.Create(StaticHashesStorageFilePath).Close();
+                File.Create(filePath).Close();
             }
-            File.WriteAllLines(StaticHashesStorageFilePath, storageScriptLines);
         }
 
         private void OnRevertAllButtonClicked()

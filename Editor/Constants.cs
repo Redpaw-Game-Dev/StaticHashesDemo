@@ -71,6 +71,11 @@ namespace LazyRedpaw.StaticHashes
             "}"
         };
         public const string StaticHashesStorageFilePath = "Assets/Scripts/LazyRedpaw/StaticHashes/StaticHashesStorage.cs";
+        public const string StaticHashesHelperFilePath = "Assets/Scripts/LazyRedpaw/StaticHashes/StaticHashesHelper.cs";
         public const string NamePlaceholder = "NAME_PLACEHOLDER";
+        public const string HashesArray = "HashesArray";
+        public const string HashNamesArray = "HashNamesArray";
+        public const string AllHashesArray = "AllHashesArray";
+        public const string AllHashNamesArray = "AllHashNamesArray";
     }
 }
