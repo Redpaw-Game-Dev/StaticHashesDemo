@@ -72,10 +72,15 @@ namespace LazyRedpaw.StaticHashes
         };
         public const string StaticHashesStorageFilePath = "Assets/Scripts/LazyRedpaw/StaticHashes/StaticHashesStorage.cs";
         public const string StaticHashesHelperFilePath = "Assets/Scripts/LazyRedpaw/StaticHashes/StaticHashesHelper.cs";
+        public const string AssetsAsmdefFilePath = "Assets/Scripts/LazyRedpaw/StaticHashes/LazyRedpaw.StaticHashes.Assets.asmdef";
         public const string NamePlaceholder = "NAME_PLACEHOLDER";
         public const string HashesArray = "HashesArray";
         public const string HashNamesArray = "HashNamesArray";
         public const string AllHashesArray = "AllHashesArray";
         public const string AllHashNamesArray = "AllHashNamesArray";
+
+        public const string AssetsAsmdefFileText = "{\n    \"name\": \"LazyRedpaw.StaticHashes.Assets\",\n    \"rootNamespace\": \"LazyRedpaw.StaticHashes\",\n    \"references\": [\n        \"LazyRedpaw.StaticHashes\"\n    ],\n    \"includePlatforms\": [],\n    \"excludePlatforms\": [],\n    \"allowUnsafeCode\": false,\n    \"overrideReferences\": false,\n    \"precompiledReferences\": [],\n    \"autoReferenced\": true,\n    \"defineConstraints\": [],\n    \"versionDefines\": [],\n    \"noEngineReferences\": false\n}";
+
+        public const string HelperFileDefaultText = "//This file was generated automatically. Do not change it manually!\nnamespace LazyRedpaw.StaticHashes\n{\n\tpublic static class StaticHashesHelper\n\t{\n\t\tpublic static readonly int[] CategoryIdsArray = new int[0];\n\t\tpublic static readonly string[] CategoriesNamesArray = new string[0];\n\t\tpublic static readonly int[] AllHashesArray = new int[0];\n\t\tpublic static readonly string[] AllHashNamesArray = new string[0];\n\t\tpublic static int[] GetHashes(int categoryId)\n\t\t{\n\t\t\treturn null;\n\t\t}\n\t\tpublic static int[] GetHashes(string categoryName)\n\t\t{\n\t\t\treturn null;\n\t\t}\n\t\tpublic static string[] GetHashNames(int categoryId)\n\t\t{\n\t\t\treturn null;\n\t\t}\n\t\tpublic static string[] GetHashNames(string categoryName)\n\t\t{\n\t\t\treturn null;\n\t\t}\n\t\tpublic static string GetHashName(int hash)\n\t\t{\n\t\t\tfor (int i = 0; i < AllHashesArray.Length; i++)\n\t\t\t{\n\t\t\t\tif (hash == AllHashesArray[i]) return AllHashNamesArray[i];\n\t\t\t}\n\t\t\treturn null;\n\t\t}\n\t\tpublic static string GetCategoryName(int categoryId)\n\t\t{\n\t\t\tfor (int i = 0; i < CategoryIdsArray.Length; i++)\n\t\t\t{\n\t\t\t\tif (categoryId == CategoryIdsArray[i]) return CategoriesNamesArray[i];\n\t\t\t}\n\t\t\treturn null;\n\t\t}\n\t}\n}";
     }
 }

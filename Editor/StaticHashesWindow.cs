@@ -63,6 +63,10 @@ namespace LazyRedpaw.StaticHashes
 
         private void CreateGUI()
         {
+            bool fileCreated = CreateAndWriteNewFile(AssetsAsmdefFilePath, AssetsAsmdefFileText);
+            if (CreateAndWriteNewFile(StaticHashesHelperFilePath, HelperFileDefaultText)) fileCreated = true;
+            if(fileCreated) AssetDatabase.Refresh();
+            
             _deletedCategories = new List<CategoryElement>();
             _categories = new List<CategoryElement>();
             _addedCategoryIds = new HashSet<int>();
@@ -70,6 +74,17 @@ namespace LazyRedpaw.StaticHashes
             InitUiElements();
             CreateCategoriesList();
             SubscribeOnUiEvents();
+        }
+
+        private bool CreateAndWriteNewFile(string filepath, string content)
+        {
+            if (!IsFileExisting(filepath))
+            {
+                CreateFile(filepath);
+                File.WriteAllText(filepath, content);
+                return true;
+            }
+            return false;
         }
 
         private void SubscribeOnUiEvents()
@@ -163,7 +178,7 @@ namespace LazyRedpaw.StaticHashes
                 scriptLines.AddRange(_categories[i].GetCategoryAsScriptLines());
             }
             scriptLines.Add("}");
-            CheckFileExistence(StaticHashesStorageFilePath);
+            if(!IsFileExisting(StaticHashesStorageFilePath)) CreateFile(StaticHashesStorageFilePath);
             File.WriteAllLines(StaticHashesStorageFilePath, scriptLines);
             
             scriptLines.Clear();
@@ -277,18 +292,20 @@ namespace LazyRedpaw.StaticHashes
                                   "\t}\n" +
                                   "}");
             scriptLines.Add(strBuilder.ToString());
-            CheckFileExistence(StaticHashesHelperFilePath);
+            if(!IsFileExisting(StaticHashesHelperFilePath)) CreateFile(StaticHashesHelperFilePath);
             File.WriteAllLines(StaticHashesHelperFilePath, scriptLines);
         }
 
-        private void CheckFileExistence(string filePath)
+        private bool IsFileExisting(string filePath)
         {
-            if (!File.Exists(filePath))
-            {
-                string directory = Path.GetDirectoryName(filePath);
-                if(!Directory.Exists(directory)) Directory.CreateDirectory(directory);
-                File.Create(filePath).Close();
-            }
+            return File.Exists(filePath);
+        }
+        
+        private void CreateFile(string filePath)
+        {
+            string directory = Path.GetDirectoryName(filePath);
+            if(!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+            File.Create(filePath).Close();
         }
 
         private void OnRevertAllButtonClicked()
