@@ -2,7 +2,7 @@
     <engine:Template name="NameExistingErrorTextUXML" src="project://database/Packages/com.lazyredpaw.statichashesdemo/Editor/NameExistingErrorTextUXML.uxml?fileID=9197481963319205126&amp;guid=3cd1f52bed74b6c42bb0f9c5d16a7feb&amp;type=3#NameExistingErrorTextUXML" />
     <Style src="project://database/Packages/com.lazyredpaw.statichashesdemo/Editor/Styles.uss?fileID=7433441132597879392&amp;guid=f47eda03c15bc814586ded2ea35fd403&amp;type=3#Styles" />
     <engine:VisualElement name="Root">
-        <engine:Button text="SAVE" name="TmpSaveButton" style="font-size: 14px; background-color: rgb(0, 88, 35);" />
+        <engine:Button text="SAVE" name="TmpSaveButton" class="button-save-tmp" />
         <engine:VisualElement name="UnsavedChangesPanel" class="changed-border" style="flex-grow: 1; flex-direction: row; margin-left: 3px; display: none;">
             <engine:Label text="YOU HAVE UNSAVED CHANGES" name="UnsavedChangesMessage" style="flex-grow: 1; -unity-text-align: middle-left; margin-left: 3px;" />
             <engine:Button text="Save" name="SaveAllButton" class="width-140px" style="width: 70px;" />

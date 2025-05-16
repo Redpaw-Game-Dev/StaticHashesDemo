@@ -272,22 +272,38 @@ namespace LazyRedpaw.StaticHashes
             }
             strBuilder.AppendLine("\t\t\t}\n" +
                                   "\t\t\treturn null;\n" +
-                                  "\t\t}");
-            strBuilder.AppendLine("\t\tpublic static string GetHashName(int hash)\n" +
+                                  "\t\t}" +
+                                  "\t\tpublic static string GetHashName(int hash)\n" +
                                   "\t\t{\n" +
                                   $"\t\t\tfor (int i = 0; i < {AllHashesArray}.Length; i++)\n" +
                                   "\t\t\t{\n" +
                                   $"\t\t\t\tif (hash == {AllHashesArray}[i]) return {AllHashNamesArray}[i];\n" +
                                   "\t\t\t}\n" +
                                   "\t\t\treturn null;\n" +
-                                  "\t\t}");
-            strBuilder.AppendLine("\t\tpublic static string GetCategoryName(int categoryId)\n" +
+                                  "\t\t}\n" +
+                                  "\t\tpublic static string GetCategoryName(int categoryId)\n" +
                                   "\t\t{\n" +
                                   $"\t\t\tfor (int i = 0; i < CategoryIdsArray.Length; i++)\n" +
                                   "\t\t\t{\n" +
                                   $"\t\t\t\tif (categoryId == CategoryIdsArray[i]) return CategoriesNamesArray[i];\n" +
                                   "\t\t\t}\n" +
                                   "\t\t\treturn null;\n" +
+                                  "\t\t}\n" +
+                                  "\t\tpublic static int GetHashValue(string hashName)\n" +
+                                  "\t\t{\n" +
+                                  $"\t\t\tfor (int i = 0; i < {AllHashNamesArray}.Length; i++)\n" +
+                                  "\t\t\t{\n" +
+                                  $"\t\t\t\tif (string.Equals(hashName, {AllHashNamesArray}[i])) return {AllHashesArray}[i];\n" +
+                                  "\t\t\t}\n" +
+                                  "\t\t\treturn 0;\n" +
+                                  "\t\t}\n" +
+                                  "\t\tpublic static int GetCategoryId(string categoryName)\n" +
+                                  "\t\t{\n" +
+                                  $"\t\t\tfor (int i = 0; i < CategoriesNamesArray.Length; i++)\n" +
+                                  "\t\t\t{\n" +
+                                  $"\t\t\t\tif (string.Equals(categoryName, CategoriesNamesArray[i])) return CategoryIdsArray[i];\n" +
+                                  "\t\t\t}\n" +
+                                  "\t\t\treturn 0;\n" +
                                   "\t\t}\n" +
                                   "\t}\n" +
                                   "}");
