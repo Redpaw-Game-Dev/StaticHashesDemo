@@ -696,8 +696,9 @@ namespace LazyRedpaw.StaticHashes
 
         private bool IsFieldValid(SerializedProperty property)
         {
-            return property.serializedObject.targetObject.GetType().GetMembers(FieldsBindingFlags).Any(member =>
-                member.Name == property.name && Attribute.IsDefined(member, typeof(StaticHashDropdownAttribute)));
+            MemberInfo member = property.GetMemberInfo();
+            return member != null && (Attribute.IsDefined(member, typeof(StaticHashDropdownAttribute)) || 
+                   Attribute.IsDefined(member, typeof(StaticHashAttribute)));
         }
 
         private List<GameObject> GetAllSceneObjects(Scene scene)
