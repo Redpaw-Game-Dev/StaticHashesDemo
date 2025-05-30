@@ -2,7 +2,7 @@
     "name": "LazyRedpaw.StaticHashes.Editor",
     "rootNamespace": "",
     "references": [
-        "GUID:65b9459197fb99545a7b12f66f444e4b"
+        "LazyRedpaw.StaticHashes"
     ],
     "includePlatforms": [
         "Editor"
