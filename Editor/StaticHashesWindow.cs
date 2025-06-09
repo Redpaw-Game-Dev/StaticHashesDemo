@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using UnityEditor;
 using UnityEditor.SceneManagement;
-using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -272,7 +271,7 @@ namespace LazyRedpaw.StaticHashes
             }
             strBuilder.AppendLine("\t\t\t}\n" +
                                   "\t\t\treturn null;\n" +
-                                  "\t\t}" +
+                                  "\t\t}\n" +
                                   "\t\tpublic static string GetHashName(int hash)\n" +
                                   "\t\t{\n" +
                                   $"\t\t\tfor (int i = 0; i < {AllHashesArray}.Length; i++)\n" +
