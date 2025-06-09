@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-using NUnit.Framework;
+using UnityEngine;
 
 namespace LazyRedpaw.StaticHashes
 {
