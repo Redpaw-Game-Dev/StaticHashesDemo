@@ -190,37 +190,50 @@ namespace LazyRedpaw.StaticHashes
                 "\t{"
             });
             StringBuilder strBuilder = new StringBuilder("\t\tpublic static readonly int[] CategoryIdsArray = {");
-            for (int i = 1; i < _categories.Count; i++)
+            bool isFirst = true;
+            for (int i = 0; i < _categories.Count; i++)
             {
-                if (i > 1) strBuilder.Append(',');
+                if(_categories[i].CategoryName == CategoriesName) continue;
+                if (!isFirst) strBuilder.Append(',');
+                isFirst = false;
                 strBuilder.Append($" {_categories[i].ID}"); 
             }
             strBuilder.Append(" };\n");
             strBuilder.Append("\t\tpublic static readonly string[] CategoriesNamesArray = {");
-            for (int i = 1; i < _categories.Count; i++)
+            isFirst = true;
+            for (int i = 0; i < _categories.Count; i++)
             {
-                if (i > 1) strBuilder.Append(',');
+                if(_categories[i].CategoryName == CategoriesName) continue;
+                if (!isFirst) strBuilder.Append(',');
+                isFirst = false;
                 strBuilder.Append($" \"{_categories[i].CategoryName}\""); 
             }
             strBuilder.Append(" };\n");
             strBuilder.Append($"\t\tpublic static readonly int[] {AllHashesArray} = ");
             strBuilder.Append('{');
-            for (int i = 1; i < _categories.Count; i++)
+            isFirst = true;
+            for (int i = 0; i < _categories.Count; i++)
             {
-                if (i > 1) strBuilder.Append(',');
+                if(_categories[i].CategoryName == CategoriesName) continue;
+                if (!isFirst) strBuilder.Append(',');
+                isFirst = false;
                 strBuilder.Append(_categories[i].GetHashesArrayAsString()); 
             }
             strBuilder.Append(" };\n");
             strBuilder.Append($"\t\tpublic static readonly string[] {AllHashNamesArray} = ");
             strBuilder.Append('{');
-            for (int i = 1; i < _categories.Count; i++)
+            isFirst = true;
+            for (int i = 0; i < _categories.Count; i++)
             {
-                if (i > 1) strBuilder.Append(',');
+                if(_categories[i].CategoryName == CategoriesName) continue;
+                if (!isFirst) strBuilder.Append(',');
+                isFirst = false;
                 strBuilder.Append(_categories[i].GetHashNamesArrayAsString()); 
             }
             strBuilder.Append(" };\n");
-            for (int i = 1; i < _categories.Count; i++)
+            for (int i = 0; i < _categories.Count; i++)
             {
+                if(_categories[i].CategoryName == CategoriesName) continue;
                 strBuilder.AppendLine(_categories[i].GetCategoryHashesAsScriptLine());
                 strBuilder.AppendLine(_categories[i].GetCategoryHashNamesAsScriptLine());
             }
@@ -228,8 +241,12 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t{\n" +
                                   "\t\t\tswitch (categoryId)\n" +
                                   "\t\t\t{");
-            for (int i = 1; i < _categories.Count; i++)
+            isFirst = true;
+            for (int i = 0; i < _categories.Count; i++)
             {
+                if(_categories[i].CategoryName == CategoriesName) continue;
+                if (!isFirst) strBuilder.Append(',');
+                isFirst = false;
                 CategoryElement cat = _categories[i];
                 strBuilder.AppendLine($"\t\t\t\t case {cat.ID}: return {cat.CategoryName}{HashesArray};");
             }
@@ -242,6 +259,7 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t\t{");
             for (int i = 1; i < _categories.Count; i++)
             {
+                if(_categories[i].CategoryName == CategoriesName) continue;
                 CategoryElement cat = _categories[i];
                 strBuilder.AppendLine($"\t\t\t\t case \"{cat.CategoryName}\": return {cat.CategoryName}{HashesArray};");
             }
@@ -254,6 +272,7 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t\t{");
             for (int i = 1; i < _categories.Count; i++)
             {
+                if(_categories[i].CategoryName == CategoriesName) continue;
                 CategoryElement cat = _categories[i];
                 strBuilder.AppendLine($"\t\t\t\t case {cat.ID}: return {cat.CategoryName}{HashNamesArray};");
             }
@@ -266,6 +285,7 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t\t{");
             for (int i = 1; i < _categories.Count; i++)
             {
+                if(_categories[i].CategoryName == CategoriesName) continue;
                 CategoryElement cat = _categories[i];
                 strBuilder.AppendLine($"\t\t\t\t case \"{cat.CategoryName}\": return {cat.CategoryName}{HashNamesArray};");
             }
@@ -588,6 +608,7 @@ namespace LazyRedpaw.StaticHashes
                 _deletedCategoryIds.Add(item.ID);
                 ChangesCount++;
             }
+            UpdateCountLabel();
             // CheckChanges();
         }
 
