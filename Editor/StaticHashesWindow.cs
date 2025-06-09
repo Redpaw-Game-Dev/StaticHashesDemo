@@ -257,7 +257,7 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t{\n" +
                                   "\t\t\tswitch (categoryName)\n" +
                                   "\t\t\t{");
-            for (int i = 1; i < _categories.Count; i++)
+            for (int i = 0; i < _categories.Count; i++)
             {
                 if(_categories[i].CategoryName == CategoriesName) continue;
                 CategoryElement cat = _categories[i];
@@ -270,7 +270,7 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t{\n" +
                                   "\t\t\tswitch (categoryId)\n" +
                                   "\t\t\t{");
-            for (int i = 1; i < _categories.Count; i++)
+            for (int i = 0; i < _categories.Count; i++)
             {
                 if(_categories[i].CategoryName == CategoriesName) continue;
                 CategoryElement cat = _categories[i];
@@ -283,7 +283,7 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t{\n" +
                                   "\t\t\tswitch (categoryName)\n" +
                                   "\t\t\t{");
-            for (int i = 1; i < _categories.Count; i++)
+            for (int i = 0; i < _categories.Count; i++)
             {
                 if(_categories[i].CategoryName == CategoriesName) continue;
                 CategoryElement cat = _categories[i];
