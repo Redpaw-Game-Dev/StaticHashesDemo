@@ -241,12 +241,9 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t{\n" +
                                   "\t\t\tswitch (categoryId)\n" +
                                   "\t\t\t{");
-            isFirst = true;
             for (int i = 0; i < _categories.Count; i++)
             {
                 if(_categories[i].CategoryName == CategoriesName) continue;
-                if (!isFirst) strBuilder.Append(',');
-                isFirst = false;
                 CategoryElement cat = _categories[i];
                 strBuilder.AppendLine($"\t\t\t\t case {cat.ID}: return {cat.CategoryName}{HashesArray};");
             }
