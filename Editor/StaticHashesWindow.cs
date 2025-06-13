@@ -214,7 +214,8 @@ namespace LazyRedpaw.StaticHashes
             isFirst = true;
             for (int i = 0; i < _categories.Count; i++)
             {
-                if(_categories[i].CategoryName == CategoriesName) continue;
+                if(_categories[i].CategoryName == CategoriesName ||
+                   _categories[i].HashesCount == 0) continue;
                 if (!isFirst) strBuilder.Append(',');
                 isFirst = false;
                 strBuilder.Append(_categories[i].GetHashesArrayAsString()); 
@@ -225,7 +226,8 @@ namespace LazyRedpaw.StaticHashes
             isFirst = true;
             for (int i = 0; i < _categories.Count; i++)
             {
-                if(_categories[i].CategoryName == CategoriesName) continue;
+                if(_categories[i].CategoryName == CategoriesName ||
+                   _categories[i].HashesCount == 0) continue;
                 if (!isFirst) strBuilder.Append(',');
                 isFirst = false;
                 strBuilder.Append(_categories[i].GetHashNamesArrayAsString()); 

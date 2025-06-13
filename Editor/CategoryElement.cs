@@ -47,6 +47,7 @@ namespace LazyRedpaw.StaticHashes
         public VisualElement Root => _categoryRoot;
         public bool IsChanged => _changesCount > 0;
         public bool IsNameChanged => _id != _savedID;
+        public int HashesCount => _hashesCount;
 
         public int ChangesCount
         {
