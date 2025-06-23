@@ -1,7 +1,7 @@
 {
   "name": "com.lazyredpaw.statichashesdemo",
   "displayName": "Static Hashes Demo",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "unity": "2022.3",
   "type": "plugin",
   "author": {

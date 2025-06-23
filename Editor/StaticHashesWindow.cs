@@ -288,6 +288,7 @@ namespace LazyRedpaw.StaticHashes
                 CategoryElement cat = _categories[i];
                 strBuilder.AppendLine($"\t\t\t\t case \"{cat.CategoryName}\": return {cat.CategoryName}{HashNamesArray};");
             }
+
             strBuilder.AppendLine("\t\t\t}\n" +
                                   "\t\t\treturn null;\n" +
                                   "\t\t}\n" +
@@ -321,6 +322,23 @@ namespace LazyRedpaw.StaticHashes
                                   "\t\t\t{\n" +
                                   $"\t\t\t\tif (string.Equals(categoryName, CategoriesNamesArray[i])) return CategoryIdsArray[i];\n" +
                                   "\t\t\t}\n" +
+                                  "\t\t\treturn 0;\n" +
+                                  "\t\t}\n" +
+                                  "\t\tpublic static int GetCategoryId(int hashValue)\n" +
+                                  "\t\t{\n" +
+                                  "\t\t\tswitch(hashValue)\n" +
+                                  "\t\t\t{");
+            for (int i = 0; i < _categories.Count; i++)
+            {
+                if(_categories[i].CategoryName == CategoriesName) continue;
+                CategoryElement categoryElement = _categories[i];
+                for (int j = 0; j < categoryElement.Hashes.Count; j++)
+                {
+                    strBuilder.AppendLine($"\t\t\t\tcase {categoryElement.Hashes[j].Value}:");
+                }
+                strBuilder.AppendLine($"\t\t\t\t\treturn {categoryElement.ID};");
+            }
+            strBuilder.AppendLine("\t\t\t}\n" +
                                   "\t\t\treturn 0;\n" +
                                   "\t\t}\n" +
                                   "\t}\n" +
