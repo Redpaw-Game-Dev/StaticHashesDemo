@@ -336,7 +336,7 @@ namespace LazyRedpaw.StaticHashes
                 {
                     strBuilder.AppendLine($"\t\t\t\tcase {categoryElement.Hashes[j].Value}:");
                 }
-                strBuilder.AppendLine($"\t\t\t\t\treturn {categoryElement.ID};");
+                if(categoryElement.Hashes.Count > 0) strBuilder.AppendLine($"\t\t\t\t\treturn {categoryElement.ID};");
             }
             strBuilder.AppendLine("\t\t\t}\n" +
                                   "\t\t\treturn 0;\n" +
