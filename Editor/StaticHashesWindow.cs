@@ -562,7 +562,7 @@ namespace LazyRedpaw.StaticHashes
                 {
                     if (scriptLines[i].Contains("class"))
                     {
-                        GetNameAndHashFromScriptLine(scriptLines[i], out string categoryName, out int categoryID);
+                        GetNameAndHashFromScriptClassLine(scriptLines[i], out string categoryName, out int categoryID);
                         AddNewCategory(categoryName, categoryID);
                     }
                     else if(scriptLines[i].Contains("int"))
@@ -594,8 +594,15 @@ namespace LazyRedpaw.StaticHashes
         private void GetNameAndHashFromScriptLine(string scriptLine, out string hashName, out int hash)
         {
             string[] splitValues = scriptLine.Split(' ');
-            hashName = splitValues[4];
+            hashName = splitValues[3];
             hash = int.Parse(splitValues[^1].Replace(";", string.Empty));
+        }
+        
+        private void GetNameAndHashFromScriptClassLine(string scriptLine, out string hashName, out int hash)
+        {
+            string[] splitValues = scriptLine.Split(' ');
+            hashName = splitValues[4];
+            hash = int.Parse(splitValues[^1]);
         }
         
         private string GetNameFromScriptLine(string scriptLine)

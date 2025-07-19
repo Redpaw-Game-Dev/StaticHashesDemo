@@ -61,7 +61,7 @@ namespace LazyRedpaw.StaticHashes
             _revertButton.clicked += OnRevertButtonClicked;
         }
 
-        public string GetHashAsScriptLine() => $"\t\tpublic static readonly int {_hashNameField.value} = {_value};";
+        public string GetHashAsScriptLine() => $"\t\tpublic const int {_hashNameField.value} = {_value};";
 
         public void Revert()
         {

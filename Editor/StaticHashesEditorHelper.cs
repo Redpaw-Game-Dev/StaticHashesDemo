@@ -24,7 +24,8 @@ namespace LazyRedpaw.StaticHashes
                     {
                         string[] splitLines = scriptLines[i].Split(' ');
                         hashList.Add(int.Parse(splitLines[^1].Replace(";", string.Empty)));
-                        labelsList.Add(new GUIContent(splitLines[4]));
+                        if(scriptLines[i].Contains("int")) labelsList.Add(new GUIContent(splitLines[3]));
+                        else if(scriptLines[i].Contains("class")) labelsList.Add(new GUIContent(splitLines[4]));
                     }
                 }
                 hashes = hashList.ToArray();
