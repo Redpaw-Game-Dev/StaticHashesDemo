@@ -62,9 +62,9 @@ namespace LazyRedpaw.StaticHashes
 
         private void CreateGUI()
         {
-            bool fileCreated = CreateAndWriteNewFile(AssetsAsmdefFilePath, AssetsAsmdefFileText);
-            if (CreateAndWriteNewFile(StaticHashesHelperFilePath, HelperFileDefaultText)) fileCreated = true;
-            if(fileCreated) AssetDatabase.Refresh();
+            // bool fileCreated = CreateAndWriteNewFile(AssetsAsmdefFilePath, AssetsAsmdefFileText);
+            // if (CreateAndWriteNewFile(StaticHashesHelperFilePath, HelperFileDefaultText)) fileCreated = true;
+            // if(fileCreated) AssetDatabase.Refresh();
             
             _deletedCategories = new List<CategoryElement>();
             _categories = new List<CategoryElement>();
@@ -77,7 +77,7 @@ namespace LazyRedpaw.StaticHashes
 
         private bool CreateAndWriteNewFile(string filepath, string content)
         {
-            if (!IsFileExisting(filepath))
+            if (!File.Exists(filepath))
             {
                 CreateFile(filepath);
                 File.WriteAllText(filepath, content);
@@ -177,7 +177,7 @@ namespace LazyRedpaw.StaticHashes
                 scriptLines.AddRange(_categories[i].GetCategoryAsScriptLines());
             }
             scriptLines.Add("}");
-            if(!IsFileExisting(StaticHashesStorageFilePath)) CreateFile(StaticHashesStorageFilePath);
+            if(!File.Exists(StaticHashesStorageFilePath)) CreateFile(StaticHashesStorageFilePath);
             File.WriteAllLines(StaticHashesStorageFilePath, scriptLines);
             
             scriptLines.Clear();
@@ -344,13 +344,8 @@ namespace LazyRedpaw.StaticHashes
                                   "\t}\n" +
                                   "}");
             scriptLines.Add(strBuilder.ToString());
-            if(!IsFileExisting(StaticHashesHelperFilePath)) CreateFile(StaticHashesHelperFilePath);
+            if(!File.Exists(StaticHashesHelperFilePath)) CreateFile(StaticHashesHelperFilePath);
             File.WriteAllLines(StaticHashesHelperFilePath, scriptLines);
-        }
-
-        private bool IsFileExisting(string filePath)
-        {
-            return File.Exists(filePath);
         }
         
         private void CreateFile(string filePath)
